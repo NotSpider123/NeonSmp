@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeonSmp - Unique Theme Purple</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --primary: #bf00ff; /* Neon Purple */
+            --primary-glow: #d966ff;
+            --secondary: #00f3ff; /* Cyan */
+            --bg-dark: #0f0518;
+            --bg-panel: rgba(30, 10, 60, 0.7);
+            --text-main: #ffffff;
+            --text-muted: #c4aee0;
+            --font-display: 'Orbitron', sans-serif;
+            --font-body: 'Outfit', sans-serif;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--bg-dark); color: var(--text-main); font-family: var(--font-body); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        button { font-family: inherit; }
+
+        /* --- BACKGROUND --- */
+        .bg-glow {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: radial-gradient(circle at 20% 30%, rgba(191, 0, 255, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 70%, rgba(0, 243, 255, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        /* --- NAVIGATION --- */
+        .navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1rem 2rem; background: rgba(15, 5, 24, 0.9);
+            backdrop-filter: blur(10px); border-bottom: 1px solid rgba(191, 0, 255, 0.3);
+            position: sticky; top: 0; z-index: 1000;
+        }
+        .nav-brand { font-family: var(--font-display); font-size: 1.5rem; font-weight: 900; color: var(--primary-glow); text-shadow: 0 0 10px rgba(191, 0, 255, 0.8); letter-spacing: 2px; }
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links a { font-weight: 600; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; color: var(--text-muted); transition: var(--transition); cursor: pointer; }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary-glow); text-shadow: 0 0 8px var(--primary); }
+        .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0%; height: 2px; background: var(--primary); transition: var(--transition); }
+        .nav-links a:hover::after { width: 100%; }
+
+        .nav-actions { display: flex; gap: 1rem; align-items: center; }
+        .btn-copy { background: rgba(191, 0, 255, 0.2); border: 1px solid var(--primary); padding: 0.5rem 1rem; border-radius: 4px; font-family: var(--font-display); font-size: 0.8rem; cursor: pointer; transition: var(--transition); color: var(--text-main); display: flex; align-items: center; gap: 0.5rem; }
+        .btn-copy:hover { background: var(--primary); box-shadow: 0 0 15px var(--primary); }
+        
+        .menu-toggle { display: none; font-size: 1.5rem; color: var(--text-main); cursor: pointer; }
+
+        /* --- VIEWS --- */
+        .view-section { display: none; opacity: 0; transition: opacity 0.3s ease; padding-top: 20px; padding-bottom: 50px; min-height: 70vh;}
+        .view-section.active { display: block; opacity: 1; }
+
+        /* --- HOME --- */
+        .hero { position: relative; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 2rem; overflow: hidden; }
+        .hero-bg-element { position: absolute; border-radius: 50%; filter: blur(60px); z-index: -1; animation: float 6s ease-in-out infinite; }
+        .orb-1 { width: 300px; height: 300px; background: var(--primary); top: 10%; left: 10%; opacity: 0.2; }
+        .orb-2 { width: 400px; height: 400px; background: #4a0080; bottom: 10%; right: 10%; opacity: 0.3; animation-delay: 1s; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        .main-logo { font-family: var(--font-display); font-size: clamp(4rem, 15vw, 10rem); font-weight: 900; color: var(--text-main); position: relative; margin-bottom: 1rem; line-height: 1; text-transform: uppercase; }
+        .main-logo::before, .main-logo::after { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-dark); }
+        .main-logo::before { left: 2px; text-shadow: -2px 0 var(--primary); clip: rect(24px, 550px, 90px, 0); animation: glitch-anim-2 3s infinite linear alternate-reverse; }
+        .main-logo::after { left: -2px; text-shadow: -2px 0 var(--secondary); clip: rect(85px, 550px, 140px, 0); animation: glitch-anim 2.5s infinite linear alternate-reverse; }
+        @keyframes glitch-anim { 0% { clip: rect(10px, 9999px, 30px, 0); } 20% { clip: rect(80px, 9999px, 100px, 0); } 40% { clip: rect(30px, 9999px, 50px, 0); } 60% { clip: rect(60px, 9999px, 70px, 0); } 80% { clip: rect(20px, 9999px, 40px, 0); } 100% { clip: rect(90px, 9999px, 110px, 0); } }
+        @keyframes glitch-anim-2 { 0% { clip: rect(90px, 9999px, 100px, 0); } 20% { clip: rect(10px, 9999px, 20px, 0); } 40% { clip: rect(50px, 9999px, 80px, 0); } 60% { clip: rect(20px, 9999px, 30px, 0); } 80% { clip: rect(70px, 9999px, 90px, 0); } 100% { clip: rect(30px, 9999px, 60px, 0); } }
+        
+        .hero-sub { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 3rem; letter-spacing: 2px; text-transform: uppercase; }
+        .status-container { display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center; width: 100%; max-width: 1000px; }
+        .status-card { background: var(--bg-panel); border: 1px solid rgba(191, 0, 255, 0.2); backdrop-filter: blur(12px); padding: 1.5rem 2.5rem; border-radius: 12px; min-width: 280px; text-align: center; transition: var(--transition); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3); position: relative; overflow: hidden; cursor: default; }
+        .status-card.clickable:hover { transform: translateY(-5px); border-color: #5865F2; box-shadow: 0 0 20px rgba(88, 101, 242, 0.4); cursor: pointer; }
+        .status-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 0 20px rgba(191, 0, 255, 0.4); }
+        .status-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: linear-gradient(90deg, var(--secondary), var(--primary)); opacity: 0; transition: var(--transition); }
+        .status-card.clickable::before { background: linear-gradient(90deg, #5865F2, #7289da); }
+        .status-card:hover::before { opacity: 1; }
+        .status-icon { font-size: 2rem; margin-bottom: 0.5rem; display: block; }
+        .status-number { font-family: var(--font-display); font-size: 2.5rem; font-weight: 700; background: linear-gradient(to bottom, #fff, #d966ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem; }
+        .status-label { font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+        .status-sub { font-size: 0.8rem; color: var(--secondary); margin-top: 0.5rem; font-weight: 600; }
+        
+        .cta-container { margin-top: 3rem; display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+        .cta-btn { padding: 1rem 3rem; background: var(--primary); color: white; font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; border: none; clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%); cursor: pointer; transition: var(--transition); box-shadow: 0 0 20px rgba(191, 0, 255, 0.5); position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 10px; }
+        .cta-btn:hover { background: var(--primary-glow); box-shadow: 0 0 40px rgba(191, 0, 255, 0.8); transform: scale(1.05); }
+        .cta-btn.discord-btn { background: #5865F2; box-shadow: 0 0 20px rgba(88, 101, 242, 0.5); }
+        .cta-btn.discord-btn:hover { background: #7289da; box-shadow: 0 0 40px rgba(88, 101, 242, 0.8); }
+
+        /* --- STORE AREA --- */
+        .store-layout { display: grid; grid-template-columns: 250px 1fr; max-width: 1200px; margin: 0 auto; gap: 2rem; padding: 2rem; min-height: 60vh; }
+        
+        /* Store Sidebar */
+        .store-sidebar { background: var(--bg-panel); border: 1px solid rgba(191, 0, 255, 0.2); border-radius: 12px; padding: 1.5rem; height: fit-content; }
+        .store-category-title { font-family: var(--font-display); color: var(--primary-glow); font-size: 1.2rem; margin-bottom: 1.5rem; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem; }
+        .store-menu li { margin-bottom: 0.5rem; }
+        .store-menu a { display: flex; align-items: center; gap: 10px; padding: 10px; border-radius: 6px; color: var(--text-muted); font-size: 0.9rem; transition: var(--transition); cursor: pointer; }
+        .store-menu a:hover, .store-menu a.active { background: rgba(191, 0, 255, 0.15); color: white; border-left: 3px solid var(--primary); }
+        
+        /* Store Content */
+        .store-content { background: var(--bg-panel); border: 1px solid rgba(191, 0, 255, 0.2); border-radius: 12px; padding: 2rem; }
+        .store-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem; }
+        .store-header h1 { font-family: var(--font-display); font-size: 2rem; color: white; }
+        .store-desc { font-size: 0.9rem; color: var(--text-muted); }
+        
+        /* Product Grid */
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.5rem; }
+        
+        .product-card { background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(191, 0, 255, 0.2); border-radius: 8px; overflow: hidden; transition: var(--transition); display: flex; flex-direction: column; position: relative; }
+        .product-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 0 15px rgba(191, 0, 255, 0.3); }
+        
+        .product-image { width: 100%; height: 140px; background: #1a0b2e; display: flex; align-items: center; justify-content: center; position: relative; }
+        .product-image img { width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(191,0,255,0.3)); }
+        
+        .product-details { padding: 1rem; text-align: center; }
+        .product-title { font-family: var(--font-display); font-size: 1.2rem; color: white; margin-bottom: 0.2rem; }
+        .product-price { font-family: var(--font-display); color: var(--secondary); font-size: 1.1rem; margin-bottom: 0.8rem; font-weight: 700; }
+        
+        .badge-lifesteal {
+            display: inline-block; font-size: 0.7rem; background: #2ecc71; color: #000; padding: 2px 8px; border-radius: 4px; font-weight: bold; text-transform: uppercase; margin-top: 5px;
+        }
+
+        .btn-buy { width: 100%; padding: 0.8rem; background: rgba(191, 0, 255, 0.1); border: 1px solid var(--primary); color: var(--primary-glow); font-family: var(--font-display); font-weight: bold; text-transform: uppercase; cursor: pointer; transition: var(--transition); border-radius: 4px; margin-top: auto; }
+        .btn-buy:hover { background: var(--primary); color: white; box-shadow: 0 0 10px var(--primary); }
+
+        /* --- VOTE AREA --- */
+        .vote-wrapper { max-width: 1000px; margin: 0 auto; text-align: center; padding: 2rem; }
+        .section-title { font-family: var(--font-display); font-size: 3rem; color: var(--text-main); margin-bottom: 1rem; text-shadow: 0 0 15px var(--primary); }
+        .section-subtitle { font-family: var(--font-display); color: var(--secondary); font-size: 1.5rem; margin-bottom: 1.5rem; }
+        .vote-desc { color: var(--text-muted); max-width: 600px; margin: 0 auto 3rem auto; font-size: 1.1rem; }
+        .vote-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .vote-link { display: flex; justify-content: space-between; align-items: center; background: var(--bg-panel); border: 1px solid rgba(191, 0, 255, 0.3); padding: 1.5rem 2rem; color: white; font-family: var(--font-display); font-size: 1.2rem; font-weight: bold; text-decoration: none; clip-path: polygon(5% 0, 100% 0, 100% 70%, 95% 100%, 0 100%, 0 30%); transition: var(--transition); position: relative; overflow: hidden; }
+        .vote-link:hover { background: var(--primary); box-shadow: 0 0 20px rgba(191, 0, 255, 0.6); transform: translateY(-3px); border-color: transparent; }
+        .vote-link span.icon { font-size: 1.5rem; transition: transform 0.3s ease; }
+        .vote-link:hover span.icon { transform: translateX(5px); }
+        @media (min-width: 768px) { .vote-link:last-child:nth-child(odd) { grid-column: span 2; max-width: 50%; margin: 0 auto; justify-content: center; gap: 1rem; } }
+
+        /* --- STAFF AREA --- */
+        .staff-wrapper { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        .staff-category { margin-bottom: 4rem; }
+        .rank-title { font-family: var(--font-display); font-size: 2rem; color: var(--primary-glow); margin-bottom: 2rem; padding-bottom: 10px; border-bottom: 2px solid rgba(191, 0, 255, 0.3); text-transform: uppercase; letter-spacing: 2px; display: inline-block; }
+        .staff-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; }
+        .staff-card { background: var(--bg-panel); border: 1px solid rgba(191, 0, 255, 0.2); border-radius: 12px; padding: 2rem; text-align: center; width: 200px; transition: var(--transition); position: relative; overflow: hidden; }
+        .staff-card:hover { transform: translateY(-10px); border-color: var(--primary); box-shadow: 0 0 25px rgba(191, 0, 255, 0.4); }
+        .staff-avatar { width: 100px; height: 100px; margin: 0 auto 1rem auto; border-radius: 12px; overflow: hidden; border: 3px solid rgba(191, 0, 255, 0.3); background: #1a0b2e; position: relative; }
+        .staff-avatar img { width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; }
+        .staff-name { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: white; margin-bottom: 0.5rem; }
+        .staff-rank-badge { font-size: 0.8rem; color: var(--secondary); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+
+        /* --- RULES --- */
+        .rules-layout { display: grid; grid-template-columns: 250px 1fr; max-width: 1200px; margin: 0 auto; gap: 2rem; padding: 2rem; min-height: 60vh; }
+        .rules-sidebar { background: var(--bg-panel); border: 1px solid rgba(191, 0, 255, 0.2); border-radius: 12px; padding: 1.5rem; height: fit-content; }
+        .sidebar-title { font-family: var(--font-display); color: var(--primary-glow); font-size: 1.2rem; margin-bottom: 1.5rem; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem; }
+        .sidebar-menu li { margin-bottom: 0.5rem; }
+        .sidebar-menu a { display: flex; align-items: center; gap: 10px; padding: 10px; border-radius: 6px; color: var(--text-muted); font-size: 0.9rem; transition: var(--transition); cursor: pointer; }
+        .sidebar-menu a:hover, .sidebar-menu a.active { background: rgba(191, 0, 255, 0.15); color: white; border-left: 3px solid var(--primary); }
+        .sidebar-menu .icon { font-size: 1.1rem; }
+        .rules-content { background: var(--bg-panel); border: 1px solid rgba(191, 0, 255, 0.2); border-radius: 12px; padding: 2.5rem; }
+        .rules-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem; }
+        .rules-header h1 { font-family: var(--font-display); font-size: 2rem; color: white; }
+        .last-updated { font-size: 0.8rem; color: var(--text-muted); font-family: monospace; }
+        .rules-subsection { display: none; }
+        .rules-subsection.active { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .rules-text p { margin-bottom: 1.5rem; color: #ddd; }
+        .rules-list { list-style-type: none; }
+        .rules-list li { position: relative; padding-left: 1.5rem; margin-bottom: 0.8rem; color: #ccc; }
+        .rules-list li::before { content: '•'; color: var(--primary-glow); position: absolute; left: 0; font-size: 1.2rem; line-height: 1.4rem; }
+        .allowed-badge { display: inline-block; background: rgba(46, 204, 113, 0.2); color: #2ecc71; border: 1px solid #2ecc71; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; margin-left: 10px; vertical-align: middle; }
+        .lifesteal-note { background: rgba(191, 0, 255, 0.1); border-left: 3px solid var(--primary); padding: 10px; margin-top: 5px; font-size: 0.85rem; color: #e0e0e0; }
+        .discord-btn-cta { display: inline-block; margin-top: 2rem; padding: 1rem 2rem; background-color: #5865F2; color: white; font-family: var(--font-display); font-weight: bold; border-radius: 4px; text-decoration: none; transition: var(--transition); box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4); }
+        .discord-btn-cta:hover { background-color: #4752c4; transform: translateY(-2px); }
+
+        /* --- FOOTER --- */
+        footer { text-align: center; padding: 2rem; color: rgba(255,255,255,0.3); font-size: 0.8rem; margin-top: auto; border-top: 1px solid rgba(255,255,255,0.05); }
+        
+        /* --- TOAST --- */
+        .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background: rgba(0, 0, 0, 0.9); border: 1px solid var(--primary); color: white; padding: 10px 20px; border-radius: 4px; opacity: 0; transition: all 0.3s ease; z-index: 3000; display: flex; align-items: center; gap: 10px; }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .menu-toggle { display: block; }
+            .store-layout { grid-template-columns: 1fr; }
+            .rules-layout { grid-template-columns: 1fr; }
+            .sidebar-menu { display: flex; overflow-x: auto; gap: 10px; padding-bottom: 10px; }
+            .sidebar-menu a { white-space: nowrap; }
+            .section-title { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">NEON<span style="color:white;">SMP</span></div>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        <ul class="nav-links">
+            <li><a onclick="switchView('home')" id="nav-home" class="active">Home</a></li>
+            <li><a onclick="switchView('rules')" id="nav-rules">Rules</a></li>
+            <li><a onclick="switchView('vote')" id="nav-vote">Vote</a></li>
+            <li><a onclick="switchView('staff')" id="nav-staff">Staff</a></li>
+            <li><a onclick="switchView('store')" id="nav-store">Store</a></li>
+        </ul>
+        <div class="nav-actions">
+            <!-- Updated IP Button -->
+            <button class="btn-copy" onclick="copyIP()">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                </svg>
+                NeonSmp.cbu.net:24701
+            </button>
+        </div>
+    </nav>
+
+    <!-- HOME VIEW -->
+    <div id="view-home" class="view-section active">
+        <main class="hero">
+            <div class="hero-bg-element orb-1"></div>
+            <div class="hero-bg-element orb-2"></div>
+            <h1 class="main-logo" data-text="NEON">NEON</h1>
+            <div class="hero-sub">Unique Theme Purple SMP</div>
+            <div class="status-container">
+                <div class="status-card">
+                    <span class="status-icon">⚔️</span>
+                    <div class="status-number">14</div>
+                    <div class="status-label">PLAYERS ONLINE</div>
+                    <div class="status-sub">NeonSmp.cbu.net:24701</div>
+                </div>
+                <a href="https://discord.gg/se8yHeseth" target="_blank" class="status-card clickable">
+                    <span class="status-icon">💬</span>
+                    <div class="status-number">220</div>
+                    <div class="status-label">USERS ONLINE</div>
+                    <div class="status-sub">Discord.gg/NeonSmp</div>
+                </a>
+            </div>
+            <div class="cta-container">
+                <button class="cta-btn" onclick="copyIP()"><span>COPY SERVER IP</span></button>
+                <a href="https://discord.gg/se8yHeseth" target="_blank" class="cta-btn discord-btn"><span>JOIN DISCORD</span></a>
+            </div>
+        </main>
+    </div>
+
+    <!-- STAFF VIEW -->
+    <div id="view-staff" class="view-section">
+        <div class="staff-wrapper">
+            <h1 class="section-title">OUR TEAM</h1>
+            
+            <!-- Founder Category -->
+            <div class="staff-category">
+                <h2 class="rank-title">Founder</h2>
+                <div class="staff-row">
+                    <div class="staff-card">
+                        <div class="staff-avatar">
+                            <img src="https://minotar.net/avatar/RealAndreW/100.png" alt="RealAndreW!">
+                        </div>
+                        <div class="staff-name">RealAndreW!</div>
+                        <div class="staff-rank-badge">Founder</div>
+                    </div>
+                    <div class="staff-card">
+                        <div class="staff-avatar">
+                            <img src="https://minotar.net/avatar/TheyCalledMeAlif/100.png" alt="TheyCalledMeAlif">
+                        </div>
+                        <div class="staff-name">TheyCalledMeAlif</div>
+                        <div class="staff-rank-badge">Founder</div>
+                    </div>
+                    <!-- MOVED Kousikhe TO HERE -->
+                    <div class="staff-card">
+                        <div class="staff-avatar">
+                            <img src="https://minotar.net/avatar/Kousikhe/100.png" alt="Kousikhe">
+                        </div>
+                        <div class="staff-name">Kousikhe</div>
+                        <div class="staff-rank-badge">Founder</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Owner Category -->
+            <div class="staff-category">
+                <h2 class="rank-title">Owner</h2>
+                <div class="staff-row">
+                    <div class="staff-card">
+                        <div class="staff-avatar">
+                            <img src="https://minotar.net/avatar/Mejbah_xd/100.png" alt="Mejbah_xd">
+                        </div>
+                        <div class="staff-name">Mejbah_xd</div>
+                        <div class="staff-rank-badge">Owner</div>
+                    </div>
+                    <!-- Kousikhe REMOVED FROM HERE -->
+                </div>
+            </div>
+
+            <!-- Co Owner Category -->
+            <div class="staff-category">
+                <h2 class="rank-title">Co-Owner</h2>
+                <div class="staff-row">
+                    <div class="staff-card">
+                        <div class="staff-avatar">
+                            <img src="https://minotar.net/avatar/SAM/100.png" alt="SAM">
+                        </div>
+                        <div class="staff-name">SAM</div>
+                        <div class="staff-rank-badge">Co-Owner</div>
+                    </div>
+                    <div class="staff-card">
+                        <div class="staff-avatar">
+                            <img src="https://minotar.net/avatar/FSD/100.png" alt="FSD">
+                        </div>
+                        <div class="staff-name">FSD</div>
+                        <div class="staff-rank-badge">Co-Owner</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Helper Category -->
+            <div class="staff-category">
+                <h2 class="rank-title">Helper</h2>
+                <div class="staff-row">
+                    <div class="staff-card">
+                        <div class="staff-avatar">
+                            <img src="https://minotar.net/avatar/BackobangHere/100.png" alt="BackobangHere">
+                        </div>
+                        <div class="staff-name">BackobangHere</div>
+                        <div class="staff-rank-badge">Helper</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- STORE VIEW -->
+    <div id="view-store" class="view-section">
+        <div class="store-layout">
+            <!-- Sidebar -->
+            <aside class="store-sidebar">
+                <div class="store-category-title">Shop</div>
+                <ul class="store-menu">
+                    <li><a href="#" class="active">⚔️ Coins [LifeSteal]</a></li>
+                    <li><a href="#">👑 Ranks</a></li>
+                    <li><a href="#">📦 Keys/Crates</a></li>
+                    <li><a href="#">⛏️ Unbans</a></li>
+                </ul>
+            </aside>
+
+            <!-- Main Content -->
+            <div class="store-content">
+                <div class="store-header">
+                    <h1>Coins [LifeSteal]</h1>
+                    <span class="store-desc">Coins used in store, exclusive for LifeSteal mode.</span>
+                </div>
+
+                <div class="product-grid">
+                    <!-- Product 1 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <!-- CSS Coin Icon -->
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="var(--secondary)">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8-8-8z"/>
+                                <path d="M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6-2.69 6-6-2.69-6-6-6z"/>
+                                <path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4-1.79 4-4-1.79-4-4-4z" fill="var(--bg-dark)"/>
+                            </svg>
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">15600 Coins</h3>
+                            <div class="product-price">$25.00 USD</div>
+                            <div class="badge-lifesteal">LIFESTEAL</div>
+                            <button class="btn-buy" onclick="showToast('Added 15600 Coins to cart')">Add to cart</button>
+                        </div>
+                    </div>
+
+                    <!-- Product 2 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                             <svg width="64" height="64" viewBox="0 0 24 24" fill="var(--secondary)">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8-8-8z"/>
+                                <path d="M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6-2.69 6-6-2.69-6-6-6z"/>
+                                <path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4-1.79 4-4-1.79-4-4-4z" fill="var(--bg-dark)"/>
+                            </svg>
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">7800 Coins</h3>
+                            <div class="product-price">$12.50 USD</div>
+                            <div class="badge-lifesteal">LIFESTEAL</div>
+                            <button class="btn-buy" onclick="showToast('Added 7800 Coins to cart')">Add to cart</button>
+                        </div>
+                    </div>
+
+                    <!-- Product 3 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                             <svg width="64" height="64" viewBox="0 0 24 24" fill="var(--secondary)">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8-8-8z"/>
+                                <path d="M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6-2.69 6-6-2.69-6-6-6z"/>
+                                <path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4-1.79 4-4-1.79-4-4-4z" fill="var(--bg-dark)"/>
+                            </svg>
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">5660 Coins</h3>
+                            <div class="product-price">$9.00 USD</div>
+                            <div class="badge-lifesteal">LIFESTEAL</div>
+                            <button class="btn-buy" onclick="showToast('Added 5660 Coins to cart')">Add to cart</button>
+                        </div>
+                    </div>
+
+                    <!-- Product 4 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                             <svg width="64" height="64" viewBox="0 0 24 24" fill="var(--secondary)">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8-8-8z"/>
+                                <path d="M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6-2.69 6-6-2.69-6-6-6z"/>
+                                <path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4-1.79 4-4-1.79-4-4-4z" fill="var(--bg-dark)"/>
+                            </svg>
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">2800 Coins</h3>
+                            <div class="product-price">$5.00 USD</div>
+                            <div class="badge-lifesteal">LIFESTEAL</div>
+                            <button class="btn-buy" onclick="showToast('Added 2800 Coins to cart')">Add to cart</button>
+                        </div>
+                    </div>
+
+                    <!-- Product 5 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                             <svg width="64" height="64" viewBox="0 0 24 24" fill="var(--secondary)">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8-8-8z"/>
+                                <path d="M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6-2.69 6-6-2.69-6-6-6z"/>
+                                <path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4-1.79 4-4-1.79-4-4-4z" fill="var(--bg-dark)"/>
+                            </svg>
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">1500 Coins</h3>
+                            <div class="product-price">$3.00 USD</div>
+                            <div class="badge-lifesteal">LIFESTEAL</div>
+                            <button class="btn-buy" onclick="showToast('Added 1500 Coins to cart')">Add to cart</button>
+                        </div>
+                    </div>
+
+                    <!-- Product 6 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                             <svg width="64" height="64" viewBox="0 0 24 24" fill="var(--secondary)">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8-8-8z"/>
+                                <path d="M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6-2.69 6-6-2.69-6-6-6z"/>
+                                <path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4-1.79 4-4-1.79-4-4-4z" fill="var(--bg-dark)"/>
+                            </svg>
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">700 Coins</h3>
+                            <div class="product-price">$1.50 USD</div>
+                            <div class="badge-lifesteal">LIFESTEAL</div>
+                            <button class="btn-buy" onclick="showToast('Added 700 Coins to cart')">Add to cart</button>
+                        </div>
+                    </div>
+
+                    <!-- Product 7 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                             <svg width="64" height="64" viewBox="0 0 24 24" fill="var(--secondary)">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8-8-8z"/>
+                                <path d="M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6-2.69 6-6-2.69-6-6-6z"/>
+                                <path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4-1.79 4-4-1.79-4-4-4z" fill="var(--bg-dark)"/>
+                            </svg>
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">300 Coins</h3>
+                            <div class="product-price">$1.00 USD</div>
+                            <div class="badge-lifesteal">LIFESTEAL</div>
+                            <button class="btn-buy" onclick="showToast('Added 300 Coins to cart')">Add to cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VOTE VIEW -->
+    <div id="view-vote" class="view-section">
+        <div class="vote-wrapper">
+            <h1 class="section-title">VOTE</h1>
+            <h2 class="section-subtitle">? Why Vote?</h2>
+            <p class="vote-desc">
+                Voting for NeonSmp helps us rank higher on server lists, bringing in new players for you to meet and play with. As a thank you, you will receive exciting in-game rewards!
+            </p>
+
+            <div class="vote-grid">
+                <a href="#" class="vote-link" onclick="showVoteToast('Link #1')">Link #1 <span class="icon">➜</span></a>
+                <a href="#" class="vote-link" onclick="showVoteToast('Link #2')">Link #2 <span class="icon">➜</span></a>
+                <a href="#" class="vote-link" onclick="showVoteToast('Link #3')">Link #3 <span class="icon">➜</span></a>
+                <a href="#" class="vote-link" onclick="showVoteToast('Link #4')">Link #4 <span class="icon">➜</span></a>
+                <a href="#" class="vote-link" onclick="showVoteToast('Link #5')">Link #5 <span class="icon">➜</span></a>
+                <a href="#" class="vote-link" onclick="showVoteToast('Link #6')">Link #6 <span class="icon">➜</span></a>
+                <a href="#" class="vote-link" onclick="showVoteToast('Link #7')">Link #7 <span class="icon">➜</span></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- RULES VIEW -->
+    <div id="view-rules" class="view-section">
+        <div class="rules-layout">
+            <aside class="rules-sidebar">
+                <div class="sidebar-title">Rules</div>
+                <ul class="sidebar-menu">
+                    <li><a onclick="switchRules('home')" id="rule-nav-home" class="active"><span class="icon">🏠</span> Home</a></li>
+                    <li><a onclick="switchRules('minecraft')" id="rule-nav-minecraft"><span class="icon">⚔️</span> Minecraft Server</a></li>
+                    <li><a onclick="switchRules('discord')" id="rule-nav-discord"><span class="icon">💬</span> Discord Server</a></li>
+                </ul>
+            </aside>
+            <div class="rules-content">
+                <div id="rule-content-home" class="rules-subsection active">
+                    <div class="rules-header">
+                        <h1>NeonSmp Official Rules</h1>
+                        <span class="last-updated">Last updated: 5 August 2025</span>
+                    </div>
+                    <div class="rules-text">
+                        <p>Welcome to NeonSmp Community. These rules are in place to ensure a fun and fair environment for everyone across our Network and Discord.</p>
+                        <p>Failure to adhere to these rules may result in a mute, kick, or ban from server or Discord depending on severity of offense.</p>
+                        <a href="https://discord.gg/se8yHeseth" target="_blank" class="discord-btn-cta">Click to join NeonSmp Support server on Discord.</a>
+                    </div>
+                </div>
+                <div id="rule-content-minecraft" class="rules-subsection">
+                    <div class="rules-header">
+                        <h1>Minecraft Server Rules</h1>
+                        <span class="last-updated">Network Wide</span>
+                    </div>
+                    <div class="rules-text">
+                        <p>The following behaviors are not allowed on server.</p>
+                        <h3 style="color:var(--primary-glow); margin-bottom:10px;">Prohibited Actions</h3>
+                        <ul class="rules-list">
+                            <li>Spamming or flooding of chat.</li>
+                            <li>Disrespectful behavior towards staff or players.</li>
+                            <li>Using hacked clients or unfair advantages.</li>
+                            <li>Advertising other servers.</li>
+                            <li>Exploiting bugs or glitches for personal gain.</li>
+                            <li>Griefing or stealing in Survival modes.</li>
+                            <li>Scamming players in trades.</li>
+                        </ul>
+                        <br>
+                        <h3 style="color:var(--secondary); margin-bottom:10px;">Lifesteal Mode Exceptions</h3>
+                        <div class="lifesteal-note">In Lifesteal, some rules regarding combat and theft are adjusted. However, Toxicity remains banned everywhere.</div>
+                    </div>
+                </div>
+                <div id="rule-content-discord" class="rules-subsection">
+                    <div class="rules-header">
+                        <h1>Discord Server Rules</h1>
+                        <span class="last-updated">Community Guidelines</span>
+                    </div>
+                    <div class="rules-text">
+                        <p>Keep our Discord a safe space for everyone. Generally, if it is not acceptable in-game, then it is not acceptable on Discord either.</p>
+                        <h3 style="color:#5865F2; margin-bottom:10px;">Chat Conduct</h3>
+                        <ul class="rules-list">
+                            <li>Non-English speech is not allowed in public channels (keep it to English).</li>
+                            <li>Spamming, mass pinging, or excessive caps.</li>
+                            <li>Disrespectful behavior or harassment.</li>
+                            <li>Do not share NSFW content.</li>
+                            <li>No racism, sexism, or discriminatory language.</li>
+                            <li>Do not impersonate staff members.</li>
+                            <li>Do not send malicious links or files.</li>
+                            <li>Respect channel topics (e.g., no support questions in general chat).</li>
+                            <li>No begging for ranks or items.</li>
+                            <li>Do not argue in public channels; take it to DMs.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 NeonSmp Network. Not affiliated with Mojang Studios.</p>
+    </footer>
+
+    <div id="toast" class="toast"><span style="color: var(--primary-glow);">✔</span> <span id="toastMsg">Action Successful</span></div>
+
+    <script>
+        function toggleMenu() { document.querySelector('.nav-links').classList.toggle('active'); }
+        function switchView(viewName) {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            document.getElementById('view-' + viewName).classList.add('active');
+            document.querySelectorAll('.nav-links a').forEach(el => el.classList.remove('active'));
+            const nav = document.getElementById('nav-' + viewName);
+            if(nav) nav.classList.add('active');
+        }
+        function switchRules(ruleName) {
+            document.querySelectorAll('.rules-subsection').forEach(el => el.classList.remove('active'));
+            document.getElementById('rule-content-' + ruleName).classList.add('active');
+            document.querySelectorAll('.sidebar-menu a').forEach(el => el.classList.remove('active'));
+            document.getElementById('rule-nav-' + ruleName).classList.add('active');
+        }
+        function copyIP() { 
+            navigator.clipboard.writeText("NeonSmp.cbu.net:24701").then(() => showToast("IP Copied to Clipboard!")); 
+        }
+        function showVoteToast(linkName) { showToast("Redirecting to " + linkName + "..."); }
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); }, 3000);
+        }
+    </script>
+</body>
+</html>
